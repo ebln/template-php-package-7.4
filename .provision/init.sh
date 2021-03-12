@@ -11,7 +11,7 @@ LICENSE=MIT
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 cd $SCRIPTPATH/..
-rm composer.lock
+rm -f composer.lock
 
 # backup template files
 mv LICENSE .provision/LICENSE
