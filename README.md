@@ -1,3 +1,10 @@
+DEPRECATED as PHP 7.4 is facing dawn
+====================================
+* superceded by private (not yet public) repo
+* PHP 7.4 is about to enter security-fix-only stage
+* PHP 8.1 is around the corner
+
+
 Template for composer packages (PHP 7.4)
 ========================================
 
