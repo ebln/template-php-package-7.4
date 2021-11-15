@@ -1,11 +1,13 @@
+DEFAULT_CONTAINER=php
 DOCKER_COMPOSE_DIR=./.provision
 DOCKER_COMPOSE_YML=$(DOCKER_COMPOSE_DIR)/docker-compose.yml
-DEFAULT_CONTAINER=php
-DOCKER_COMPOSE=docker-compose -f $(DOCKER_COMPOSE_YML)
+MKFILE_PATH=$(abspath $(lastword $(MAKEFILE_LIST)))
+CURRENT_DIR=$(notdir $(patsubst %/,%,$(dir $(MKFILE_PATH))))
+DOCKER_COMPOSE=COMPOSE_PROJECT_NAME=$(CURRENT_DIR) docker-compose -f $(DOCKER_COMPOSE_YML)
 MAKE=make -s
 .DEFAULT_GOAL := help
 
-.PHONY: help build rm enter test
+.PHONY: help build rm enter test test-all
 
 help: ## Show this help.
 	@grep -E '^[a-zA-Z_-]+:.*?##\s*.*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?##\\s*"}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -25,5 +27,8 @@ stop:##Alias of «rm»
 enter:##Log into the main container
 	$(DOCKER_COMPOSE) run ${DEFAULT_CONTAINER} /bin/bash
 
-test:##Log into the main container
+test:##Run unit tests
+	$(DOCKER_COMPOSE) run ${DEFAULT_CONTAINER} composer phpunit
+
+test-all:##Run the complete code quality suite
 	$(DOCKER_COMPOSE) run ${DEFAULT_CONTAINER} composer test

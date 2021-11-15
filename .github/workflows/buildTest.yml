@@ -16,7 +16,7 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate
       - name: Require php-cs-fixer
-        run: composer require friendsofphp/php-cs-fixer --dev --prefer-dist --no-progress
+        run: composer require "friendsofphp/php-cs-fixer:2.18.2" --dev --prefer-dist --no-progress
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
       - name: Check composer.json
